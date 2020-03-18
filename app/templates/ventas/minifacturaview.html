@@ -1,0 +1,46 @@
+<div class="col-md-6 col-sm-12">
+    <div class="card card-border-c-blue">
+      <div class="card-body">
+        <div class="mb-3">
+          <h5 class="d-inline-block m-b-10"> {{data['nombre_empresa']}} </h5>
+          <div class="dropdown-secondary dropdown float-right">
+            <span>Estado : </span>
+            <button class="btn waves-effect waves-light btn-danger btn" type="button"  aria-expanded="false"> {{data['factura_estado']}}</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <ul class="list list-unstyled">
+              <li>Factura #: &nbsp; {{data['INVOICE_NUMBER']}} </li>
+              <li>Emitida el: <span class="text-semibold">{{data['order_date']}}</span></li>
+            </ul>
+          </div>
+          <div class="col-sm-6">
+            <ul class="list list-unstyled text-right">
+              <li>{{data['Total']}}</li>
+              <li>Metodo: <span class="text-semibold"> Al Contado </span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="m-t-30">
+          <div class="task-list-table">
+            <p class="task-due"><strong> Vence : </strong><strong class="label label-primary"> {{data['factura_vence']}}</strong>
+            </p>
+          </div>
+          <div class="task-board m-0 float-right">
+            <a href="#!" class="btn waves-effect waves-light btn-primary"><i class="fas fa-eye m-0"></i></a>
+            <div class="dropdown-secondary dropdown d-inline">
+              <button class="btn waves-effect waves-light btn-primary dropdown-toggle" type="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                  class="fas fa-bars"></i></button>
+              <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn"
+                data-dropdown-out="fadeOut">
+                <a class="dropdown-item" href="#!"><i class="fas fa-print mr-2"></i> Imprimir</a>
+                <a class="dropdown-item" href="#!"><i class="fas fa-archive mr-2"></i>Archivar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card" id="printTable">
+
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}">
+                <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="col-md-8 invoice-contact">
+                            <div class="invoice-box row">
+                                <div class="col-sm-12">
+
+                                    <table class="table table-responsive invoice-table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td><a href="http://html.codedthemes.com/treva/bootstrap/index.html"
+                                                        class="b-brand">
+                                                        <img class="img-fluid" width="50px" height="50px"
+                                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN1-vP73raS7tOOz68EGVBBrGx7b04c7k3E5dESiavzOHx5GJf8w&s"
+                                                            alt="Nextro Logo">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ data['nombre_empresa']}} </td>
+                                            </tr>
+                                            <tr>
+                                                <td> {{ data['direccion']}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><a class="text-secondary" href="mailto:demo@gmail.com"
+                                                        target="_top">
+                                                        {{ data['email']}}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td> {{data['telefono']}} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row invoive-info d-print-inline-flex">
+                        <div class="col-md-4 invoice-client-info">
+                            <h6>Client Information :</h6>
+                            <h6 class="m-0"> {{data['client_name']}} </h6>
+                            <p class="m-0 m-t-10"> {{data['client_dirrection']}} </p>
+                            <p class="m-0"> {{data['client_cel']}} </p>
+                            <p><a class="text-secondary" href="mailto:demo@gmail.com" target="_top">
+                                    {{data['client_mail']}}
+                                </a></p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Order Information :</h6>
+                            <table class="table table-responsive invoice-table invoice-order table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <th>Date :</th>
+                                        <td>{{data['order_date']}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status :</th>
+                                        <td>
+                                            <span class="label label-warning"> {{data['order_status']}} </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Id :</th>
+                                        <td>
+                                            {{data['order_id']}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="m-b-20">Invoice Number <span> # {{data['INVOICE_NUMBER']}} </span></h6>
+                            <h6 class="text-uppercase text-primary">Total Due :
+                                <span> {{data['TOTAL_DUE']}}</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table invoice-detail-table">
+                                    <thead>
+                                        <tr class="thead-default">
+                                            <th>Description</th>
+                                            <th>Quantity</th>
+                                            <th>Amount</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for r in data['data'] %}
+                                        <tr>
+                                            <td>
+                                                <p class="m-0"> {{r[0]}} </p>
+                                            </td>
+                                            <td>{{r[1]}}</td>
+                                            <td>{{r[2]}}</td>
+                                            <td>{{r[3]}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-responsive invoice-table invoice-total">
+                                <tbody>
+                                    <tr>
+                                        <th>Sub Total :</th>
+                                        <td> {{data['Sub_Total']}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Taxes (10%) :</th>
+                                        <td> {{data['Taxes_10']}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Discount (5%) :</th>
+                                        <td> {{data['Discount_5']}} </td>
+                                    </tr>
+                                    <tr class="text-info">
+                                        <td>
+                                            <hr>
+                                            <h5 class="text-primary m-r-10">Total :</h5>
+                                        </td>
+                                        <td>
+                                            <hr>
+                                            <h5 class="text-primary">{{data['Total']}}</h5>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h6>Terms and Condition :</h6>
+                            <p>{{data['Terms_and_Condition']}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-sm-12 invoice-btn-group text-center">
+                    <button type="button" onclick="print()"
+                        class="btn btn-print-invoice waves-effect waves-light btn-primary m-b-10">Imprimir</button>
+                </div>
+            </div>
+        </div>
+
+        <script type="application/javascript">
+            function print() {
+                var prtContent = document.getElementById("printTable");
+                var WinPrint = window.open('Factura', '', 'left=0,top=0,width=1260,height=900,toolbar=0,scrollbars=0,status=0,layout =landscape');
+
+                WinPrint.document.write(prtContent.innerHTML);
+                WinPrint.document.close();
+                WinPrint.focus();
+                WinPrint.print();
+                WinPrint.close();
+            }
+        </script>
+
+    </div>
+</div>
+</div>
+
+{% endblock %}

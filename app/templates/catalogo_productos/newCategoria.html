@@ -1,0 +1,56 @@
+<!-- Modal -->
+
+<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#newCategoriaModal"
+    onclick="newProduct()">
+    Agregar
+</button>
+
+<div class="modal fade" id="newCategoriaModal" tabindex="-1" role="dialog" aria-labelledby="newCategoriaModal"
+    aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Categoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        Nombre
+                        <input type="text" class="form-control form-control-user" id="txtNombreCategoria" placeholder="Vegetales">
+                    </div>
+
+                    <div class="form-group">
+                        Descripcion
+                        <textarea class="form-control form-control-user" id="txtDescripcionCategoria" placeholder="..."> </textarea>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="close()">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="agregarProducto()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+  
+  function agregarProducto() {
+        alert('Guardar')
+
+        let nombre = document.querySelector("#txtNombreCategoria").value;
+        let descripcion = document.querySelector("#txtDescripcionCategoria").value;
+        
+        console.log([nombre, descripcion])
+        
+        $('#dataTable')
+        .DataTable()
+        .row
+        .add([nombre, descripcion])
+        .draw( );
+    }
+</script>

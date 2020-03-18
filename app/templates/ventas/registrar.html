@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      
+
+      <!-- DataTales Example -->
+      <div class="card shadow">
+        <div class="card-header py-3">
+          <div class="row">
+
+            <div class="col-md-10 col-sm-8">
+              <h6 class="mb-1 font-weight-bold text-primary">Productos</h6>
+              <div id="panelNuevoProducto">
+
+              </div>
+            </div>
+
+            <div class="col-md-1 col-sm-2">
+              <button class="btn btn-primary btn-sm" type="button" onclick="visualizar()">
+                Visualizar
+              </button>
+            </div>
+            <div class="col-md-1 col-sm-2">
+              <button class="btn btn-primary btn-sm pull-right" type="button" onclick="crear()">
+                Crear
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <script type="application/javascript">
+
+        // Call the dataTables jQuery plugin
+        $(document).ready(function () {
+          $('#dataTable').data('dataSet', [
+          ])
+        })
+
+        // Call the dataTables jQuery plugin
+        $(document).ready(function () {
+          $('#dataTable').DataTable(
+            {
+              // bFilter: false,
+              data: $('#dataTable').data('dataSet'),
+              columns: [
+                { title: "Descripcion" },
+                { title: "Cantidad" },
+                { title: "Monto" },
+                { title: "Total" },
+                { title: "Action", "defaultContent": "<i class='fa fa-minus-square  button' aria-hidden='true' onclick='eliminarFila(this)' >  </i> " }
+              ]
+            }
+          );
+        });
+
+        function eliminarFila(fila) {
+          console.log('Eliminar fila')
+          $("#dataTable")
+            .DataTable()
+            .row($(fila)
+              .closest("tr"))
+            .remove()
+            .draw();
+        }
+
+        function visualizar() {
+          var a = $('#dataTable');
+          if (a) {
+            a = a.DataTable()
+            data = Array.from(a.rows().data())
+
+            var tq = {
+              data: data,
+              nombre_empresa: "ARLSS RD",
+              direccion: "1065 Mandan Road, Columbia MO, Missouri. (123)-65202",
+              email: "ARLSS@gmail.com",
+              telefono: "+91 919-91-91-919",
+
+              client_name: "Darlyn Daniel Victoriano",
+              client_dirrection: "1065 Mandan Road, Columbia MO, Missouri.",
+              client_cel: "(123)-65202",
+              client_mail: "db@gmail.com",
+
+              order_date: "November 14",
+              order_status: "Pending",
+              order_id: "146859",
+
+
+              Sub_Total: "$ 4000.00",
+              Taxes_10: "$ 00.00",
+              Discount_5: "$ 00.00",
+              Total: "$ 4000.00",
+
+              INVOICE_NUMBER: "125863478945",
+              TOTAL_DUE: "$00.00",
+
+
+              Terms_and_Condition: "data data data lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor"
+            }
+
+            var param = JSON.stringify(tq)
+            url = btoa(param)
+
+            window.open("/ventas/verfactura?data=" + url, "_blank")
+
+          }
+        }
+
+        function crear() {
+          var a = $('#dataTable');
+          if (a) {
+            a = a.DataTable()
+            data = Array.from(a.rows().data())
+
+            let jsonend = {
+              "productos": data
+            }
+
+            // type: 'post'
+            // dataType: 'json'
+            // contentType: 'application/json'
+
+            $.ajax({
+              url: "/api/factura",
+              method: "POST",
+              dataType: "json",
+              contentType: "application/json",
+              data: JSON.stringify(jsonend)
+            }).done(function () {
+              $(this).addClass("done");
+            });
+
+          }
+        }
+
+        window.onload = (event) => {
+          $.ajax({
+            url: "/ventas/newProduct",
+            method: "GET",
+            dataType: "html"
+          }).done(function (newProductTemplate) {
+            $("#panelNuevoProducto").append(newProductTemplate);
+          });
+        };
+      </script>
+    </div>
+  </div>
+</div>
+{% endblock %}

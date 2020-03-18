@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+
+      <!-- DataTales Example -->
+      <div class="card shadow">
+        <div class="card-header py-3">
+          <div class="row">
+
+            <div class="col-md-10 col-sm-8">
+              <h6 class="mb-1 font-weight-bold text-primary">Productos</h6>
+              <div id="panelNuevoProducto">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+      <script type="application/javascript">
+
+        // Call the dataTables jQuery plugin
+        $(document).ready(function () {
+          $('#dataTable').DataTable(
+            {
+              // bFilter: false,
+              data: [],
+              columns: [
+                { title: "Categoria" },
+                { title: "Producto" },
+                { title: "Precio" },
+                { title: "Descripcion" },
+                { title: "Action", "defaultContent": "<i class='fa fa-minus-square  button' aria-hidden='true' onclick='eliminarFila(this)' >  </i> " }
+              ]
+            }
+          );
+        });
+
+
+
+        window.onload = (event) => {
+          $.ajax({
+            url: "/catalogo_productos/newProducto",
+            method: "GET",
+            dataType: "html"
+          }).done(function (newProductTemplate) {
+            $("#panelNuevoProducto").append(newProductTemplate);
+          });
+        };
+
+        function saveProducto() {
+          let categoria = document.querySelector("#txtCategoria").value;
+          let nombre = document.querySelector("#txtProducto").value;
+          let precio = document.querySelector("#txtPrecio").value;
+          let descripcion = document.querySelector("#txtDescripcionProducto").value;
+
+          let jsonend = {
+            "categoria": categoria,
+            "nombre": nombre,
+            "precio": precio,
+            "descripcion": descripcion
+          }
+
+
+          // type: 'post'
+          // dataType: 'json'
+          // contentType: 'application/json'
+
+          $.ajax({
+            url: "/api/Producto",
+            method: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(jsonend)
+          }).done(function () {
+            $(this).addClass("done");
+          });
+        }
+      </script>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

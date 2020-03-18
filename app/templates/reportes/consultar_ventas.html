@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+
+Resumen Ventas
+ 
+  <div class="filter-bar">
+    <nav class="navbar m-b-30 p-10">
+      <ul class="nav">
+        <li class="nav-item f-text active">
+          <a class="nav-link text-secondary" href="#!">Filtros: <span class="sr-only">(actual)</span></a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-secondary" href="#" id="bydate" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"><i class="far fa-clock"></i> Por fecha</a>
+          <div class="dropdown-menu" aria-labelledby="bydate">
+            <a class="dropdown-item" href="#!"> Mostrar todo</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#!">Hoy</a>
+            <a class="dropdown-item" href="#!">Ayer</a>
+            <a class="dropdown-item" href="#!">Esta Semana</a>
+            <a class="dropdown-item" href="#!">Este Mes</a>
+            <a class="dropdown-item" href="#!">Este año</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-secondary" href="#" id="bystatus" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"><i class="fas fa-chart-line"></i> Por Estado</a>
+          <div class="dropdown-menu" aria-labelledby="bystatus">
+            <a class="dropdown-item" href="#!">Mostrar todo</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#!">Registrada</a>
+            <a class="dropdown-item" href="#!">Confirmada</a>
+            <a class="dropdown-item" href="#!">Saldada</a>
+            <a class="dropdown-item" href="#!">Archivada</a>
+            <a class="dropdown-item" href="#!">Atrasada</a>
+          </div>
+        </li>
+
+        <li class="nav-item f-text active">
+          <span class="nav-link text-secondary">Cliente: </span>
+        </li>
+        
+        <div class="nav-item">
+          <input type="text" class="form-control" placeholder="Nombre">
+        </div>
+      </ul>
+    </nav>
+  </div>
+
+  </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+Cambiar iconos a los de zacarias pagina web.
+* Use shadow doms to test the browser.
+* En los reportes poner fondo blanco.
+* Registrar productos
+* Corregir estilos  verfactura.
+
+https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
+https://blog.revillweb.com/open-vs-closed-shadow-dom-9f3d7427d1af
+
+Funcionalidades Extras:
+* Hacer pedidos al colmado.
+* Realizar notificaciones al vendedor y comprador.
+* Permitir que otras organizaciones utilicen nuestra API.
+
+Done
+* Grafica clientes por mes
+* Top Clientes mes
+* Agregar tablas a productos y categorias (grabrar en la base de datos simple)
+* Corregir error de Chart.min.js
+* Componentes, subscribir funciones (callbacks) a ellos.   
+* Completar la funcionalidad de visualizar
+* Agregar nuevo producto a la tabla. (Done)
+* Eleminar la tabla.  (Done)
+* Realize la tematica de los paquetes. Para asi poder hacer el cliente.
+* Mejora 404
+* Generic Saving API -> For saving all files.
+  /api/Save/<table> Done

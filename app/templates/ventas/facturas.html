@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pcoded-main-container">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <div class="pcoded-content container">
+    <div class="row">
+
+      <!-- Caja de Busqueda -->
+      <div class="col-xl-3 col-lg-12">
+        <div class="card task-board-left">
+          <div class="card-header">
+            <h5>Caja de Busqueda</h5>
+          </div>
+          <div class="card-body">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control add_task_todo" data-filter = '{"name": "*", "autoSearch": false}' placeholder="Busque aqui..."  onchange="filterChange(this)">
+              <div class="input-group-append">
+                <button class="btn waves-effect waves-light btn-primary btn-msg-send" type="button" onclick=""><i
+                    class="fas fa-search"></i></button>
+              </div>
+            </div>
+            <div class="task-right">
+              <div class="task-right-header-status">
+                <span class="f-w-400" data-toggle="collapse">Estado</span>
+                <i class="fas float-right m-t-5"></i>
+              </div>
+              <div class="taskboard-right-progress">
+                <h6 class="m-t-10">Registrada</h6>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 33%" aria-valuenow="33"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <h6 class="m-t-15">Confirmada</h6>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 66%" aria-valuenow="66"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <h6 class="m-t-15">Saldada</h6>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <h6 class="m-t-15">Archivada</h6>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <h6 class="m-t-15">Atrasada</h6>
+                <div class="progress">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="col-xl-9 col-lg-12 filter-bar invoice-list">
+        <nav class="navbar m-b-30 p-10">
+          <ul class="nav">
+            <li class="nav-item f-text active">
+              <a class="nav-link text-secondary" href="#!">Filtros: <span class="sr-only">(actual)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-secondary" href="#" id="bydate" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"><i class="far fa-clock"></i> Por fecha</a>
+              <div class="dropdown-menu" aria-labelledby="bydate">
+                <a class="dropdown-item" href="#!" data-filter = '{"name": "fecha", "autoSearch": false}' onclick="pushValue(this, '*')"> Mostrar todo</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-filter = '{"name": "fecha", "autoSearch": true}' onclick="pushValue(this, 'hoy')">Hoy</a>
+                <a class="dropdown-item" href="#" data-filter = '{"name": "fecha", "autoSearch": true}' onclick="pushValue(this, 'ayer')">Ayer</a>
+                <a class="dropdown-item" href="#" data-filter = '{"name": "fecha", "autoSearch": true}' onclick="pushValue(this, 'esta_semana')">Esta Semana</a>
+                <a class="dropdown-item" href="#" data-filter = '{"name": "fecha", "autoSearch": true}' onclick="pushValue(this, 'este_mes')">Este Mes</a>
+                <a class="dropdown-item" href="#" data-filter = '{"name": "fecha", "autoSearch": true}' onclick="pushValue(this, 'este_anio')">Este año</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-secondary" href="#" id="bystatus" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"><i class="fas fa-chart-line"></i> Por Estado</a>
+              <div class="dropdown-menu" aria-labelledby="bystatus">
+                <a class="dropdown-item" href="#!" data-filter = '{"name": "estado", "autoSearch": true}'  onclick="pushValue(this, 'este_anio')">Mostrar todo</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#!" data-filter = '{"name": "estado", "autoSearch": true}' onclick="pushValue(this, 'Registrada')">Registrada</a>
+                <a class="dropdown-item" href="#!" data-filter = '{"name": "estado", "autoSearch": true}' onclick="pushValue(this, 'Confirmada')">Confirmada</a>
+                <a class="dropdown-item" href="#!" data-filter = '{"name": "estado", "autoSearch": true}' onclick="pushValue(this, 'Saldada')">Saldada</a>
+                <a class="dropdown-item" href="#!" data-filter = '{"name": "estado", "autoSearch": true}' onclick="pushValue(this, 'Archivada')">Archivada</a>
+                <a class="dropdown-item" href="#!" data-filter = '{"name": "estado", "autoSearch": true}' onclick="pushValue(this, 'Atrasada')">Atrasada</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="row" id="panelFacturas">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var filterState  = {
+
+  }
+
+  function filterChange(e)
+  {
+    var a  = $(e)
+    let filter  = a.data('filter')
+    filterState[filter.name] = {
+      value: a.val()
+    }
+
+    if (filter.autoSearch)
+    {
+      //I have to trigger the search immediately.
+      console.log('Todo trigger the search.!!')
+    }
+
+    console.log(filter);
+    console.log(a);
+  }
+
+  function pushValue(e, valor)
+  {
+    var a  = $(e)
+    let filter  = a.data('filter')
+    filterState[filter.name] = {
+      value: valor
+    }
+  }
+
+  var facturas;
+  function cargarFactura(factura)
+  {
+    console.log(factura)
+    $.ajax({
+      url:  factura.link,
+      method: "GET",
+      dataType: "html"
+    }).done(function (newProductTemplate) {
+      $("#panelFacturas").append(newProductTemplate);
+    });
+  }
+
+  window.onload = (event) => {
+    $.ajax({
+      url: "/api/facturas/list",
+      method: "GET",
+      dataType: "json"
+    }).done(function (result) {
+      facturas =  result;
+      facturas.facturas.forEach(e => cargarFactura(e))
+    });
+  };
+</script>
+
+{% endblock %}
